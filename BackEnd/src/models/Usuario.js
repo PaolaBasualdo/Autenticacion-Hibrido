@@ -10,15 +10,21 @@ const Usuario = sequelize.define(
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
     password: { type: DataTypes.STRING, allowNull: true }, // puede ser null si es social login
     proveedor: {
-      type: DataTypes.STRING, // "local", "google", "facebook"
+      type: DataTypes.ENUM("local", "google", "facebook", "instagram"), // Proveedor de autenticación, ENUM para restringir valores
       allowNull: false,
       defaultValue: "local",
+      validate: {
+    isIn: {
+      args: [['local', 'google', 'facebook', 'instagram']],
+      msg: 'Proveedor no válido'
+    } // Validación para asegurar que el valor esté en el conjunto permitido
     },
     proveedorId: {
       type: DataTypes.STRING, // id que da Google/Facebook
       allowNull: true,
     },
   },
+},
   {
     tableName: "usuarios",
     timestamps: true,
