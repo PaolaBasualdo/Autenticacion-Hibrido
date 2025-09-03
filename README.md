@@ -1,3 +1,4 @@
+<h2 align="center"> INSTITUTO SUPERIOR SANTA ROSA DE CALAMUCHITA</h2>
 <h1 align="center">
 💻 Hackaton 2025 - Sistema de Autenticación Híbrido
 </h1>
