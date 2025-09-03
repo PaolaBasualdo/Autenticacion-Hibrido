@@ -44,40 +44,24 @@ router.get('/google',
 // RUTA 2: Callback de Google - Aquí regresa el usuario después de autenticarse
 // Google redirige aquí con un código de autorización que Passport procesa automáticamente
 router.get('/google/callback',
-  // Passport procesa la respuesta de Google y ejecuta la estrategia GoogleStrategy
-  passport.authenticate('google', { 
+  passport.authenticate('google', { // Passport procesa la respuesta de Google y ejecuta la estrategia GoogleStrategy
     session: false // No usar sesiones porque usamos JWT
   }),
-  (req, res) => {
-    try {
-      // En este punto, req.user contiene los datos del usuario devueltos por la estrategia
-      // (ya sea un usuario existente o uno recién creado)
-      
-      // Generar token JWT con la información del usuario
-      const token = jwt.sign(
+  (req, res) => { 
+    try { // En este punto, req.user contiene los datos del usuario devueltos por la estrategia // (ya sea un usuario existente o uno recién creado                            
+      const token = jwt.sign(                            
         { 
           id: req.user.id, 
           email: req.user.email 
         }, 
-        process.env.JWT_SECRET,                    // Clave secreta para firmar el token
+        process.env.JWT_SECRET,                    
         { 
           expiresIn: process.env.JWT_EXPIRES_IN || '24h' // Token válido por 24 horas
         }
       );
-      
-      // Devolver respuesta JSON con el token y datos básicos del usuario
-      res.json({ 
-        success: true,
-        message: 'Autenticación con Google exitosa',
-        token,           // JWT que el frontend debe guardar y usar en requests futuros
-        user: {
-          id: req.user.id,
-          nombre: req.user.nombre,
-          email: req.user.email,
-          proveedor: req.user.proveedor  // 'google' para identificar el tipo de cuenta
-        }
-      });
-    } catch (error) {
+      res.redirect(`http://localhost:5173/bienvenida?token=${token}`);
+    } 
+    catch (error) {
       console.error('Error generando token JWT:', error);
       res.status(500).json({ 
         success: false, 
