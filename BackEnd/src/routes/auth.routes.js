@@ -9,7 +9,7 @@
 import { Router } from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
-import { register, login } from "../controllers/usuario.controller.js";
+import { register, login } from "../controllers/auth.controller.js";
 
 const router = Router();
 
