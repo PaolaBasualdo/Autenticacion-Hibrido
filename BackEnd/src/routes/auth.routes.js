@@ -4,7 +4,7 @@
 // Este archivo maneja todas las rutas relacionadas con autenticación:
 // - Registro e inicio de sesión local (email/password)
 // - Autenticación OAuth con Google
-// - Generación de tokens JWT para mantener sesiones sin estado
+
 
 import { Router } from "express";
 import passport from "passport";
